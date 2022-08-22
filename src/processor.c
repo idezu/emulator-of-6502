@@ -5,9 +5,8 @@
 
 #include <type.h>
 #include <processor.h>
-#include <memory.h>
 
-void cpu_Reset()
+void cpu_Reset(CPU *cpu)
 {
     cpu->PS.I = true;
     cpu->PC = RESET_VECT;

@@ -7,17 +7,16 @@
 #include <processor.h>
 
 
-void memory_initialize()
+void memory_initialize(Mem *mem)
 {
     for (size_t i = 0; i < MAX_MEM; i++)
     {
         mem->Data[i] = 0xEA;
     }
-    return 0;
 }
 
-Byte memory_Fetch(int *cycles)
+Byte memory_Fetch(int *cycles,Byte program_counter,Mem *mem)
 {
     *cycles = *cycles - 1;
-    return mem->Data[cpu->PC];
+    return mem->Data[program_counter];
 }

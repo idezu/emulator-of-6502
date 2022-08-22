@@ -23,11 +23,16 @@
 #include <type.h>
 #include <processor.h>
 #include <memory.h>
+#include <instruction.h>
+
+
+CPU *cpu;
+Mem *mem;
 
 int Reset()
 {
-    cpu->reset;
-    mem->initialize;
+    cpu->reset(cpu);
+    mem->initialize(mem);
 }
 
 int Loop()
@@ -37,8 +42,9 @@ int Loop()
         cpu->PC++;
         for (size_t i = 0; i < SPEED; i+=2)
         {
-            Byte instruction = mem->fetch(1);
-            cpu->exec_ins(instruction,1);
+            int exec_Count = 2;
+            Byte instruction = mem->fetch(&exec_Count,cpu->PC,mem);
+            cpu->exec_ins(instruction,exec_Count);
             
             //delay(); // to sync with the video // TODO || no video for now
         }
@@ -50,14 +56,14 @@ int Loop()
 //execute an instruction and 
 void Execute_Instruction(Byte instruction, int execc)
 {
-    Byte value = mem->fetch(1);
+    Byte value = mem->fetch(NULL,cpu->PC,mem);
 
 
     switch (instruction)
     {
         
         default:
-            printf("\n==================================================================\n|error|\tInstruction not handled %d and it's value %d\t|error|\n==================================================================\n",instruction,mem->fetch);
+            printf("\n==================================================================\n|error|\tInstruction not handled %d and it's value %d\t|error|\n==================================================================\n",instruction,mem->fetch(NULL,cpu->PC,mem));
             
             break;
     }

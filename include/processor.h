@@ -1,11 +1,9 @@
 #pragma once
 
-#include <instruction.h>
-#include <type.h>
+#include <stdbool.h>
 
 
-void delay(int number_of_seconds);
-void cpu_Reset(void);
+
 
 
 struct PS{                  //processor status
@@ -26,12 +24,11 @@ typedef struct CPU          //cpu structure representation
     Byte A, X, Y;           //registers
     
     struct PS PS;
-    void (*reset)(void);
+    void (*reset)(CPU*);
     void (*exec_ins)(Byte, int);
     
 }CPU;
 
-CPU *cpu;
 
 //========================================================================================================//
 //helpfull macro's
@@ -40,4 +37,4 @@ CPU *cpu;
 #define RESET_VECT 0xFFFC
 #define SPEED 216000000 //216 MHz
 
-int cpu_Loop(int cycles, CPU *cpuP, Mem *memoryP);
+void cpu_Reset(CPU *cpu);
