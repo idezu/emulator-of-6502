@@ -1,0 +1,1 @@
+# emulator_of_6502
